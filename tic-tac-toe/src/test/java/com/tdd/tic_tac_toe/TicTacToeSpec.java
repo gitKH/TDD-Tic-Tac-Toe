@@ -12,8 +12,12 @@ import org.junit.Assert;
 public class TicTacToeSpec {
 	/**
 	 * Specification 1 : A piece can be placed on any empty space of a 3×3 board.
+	 * 
 	 * Specification 2 : There should be a way to find out which player should play
 	 * next.
+	 * 
+	 * Specification 3 : A player wins by being the first to connect a line of
+	 * friendly pieces from one side or corner of the board to the other. next.
 	 */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -102,5 +106,87 @@ public class TicTacToeSpec {
 		ticTacToe.play(1, 1);
 		ticTacToe.play(2, 1);
 		Assert.assertEquals('X', ticTacToe.nextPlayer());
+	}
+
+	/**
+	 * Test Requirement for Specification 3 : Until a winner occurred, print no
+	 * winner
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenPlayThenNoWinner() {
+		String actual = ticTacToe.play(1, 1);
+		Assert.assertEquals("No winner", actual);
+	}
+
+	/**
+	 * Test Requirement for Specification 3 : Check if the horizontal lines are
+	 * completed in order to finish the game and announce a winner
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenPlayAndWholeHorizontalLineThenWinner() {
+		ticTacToe.play(1, 1); // X
+		ticTacToe.play(1, 2); // O
+		ticTacToe.play(2, 1); // X
+		ticTacToe.play(2, 2); // O
+		String actual = ticTacToe.play(3, 1); // X
+		Assert.assertEquals("X is the winner", actual);
+	}
+
+	/**
+	 * Test Requirement for Specification 3 : Check if the vertical lines are
+	 * completed in order to finish the game and announce a winner
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenPlayAndWholeVerticalLineThenWinner() {
+		ticTacToe.play(2, 1); // X
+		ticTacToe.play(1, 1); // O
+		ticTacToe.play(3, 1); // X
+		ticTacToe.play(1, 2); // O
+		ticTacToe.play(2, 2); // X
+		String actual = ticTacToe.play(1, 3); // O
+		Assert.assertEquals("O is the winner", actual);
+	}
+
+	/**
+	 * Test Requirement for Specification 3 : Check if the bottom diagonal lines are
+	 * completed in order to finish the game and announce a winner
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenPlayAndTopBottomDiagonalLineThenWinner() {
+		ticTacToe.play(1, 1); // X
+		ticTacToe.play(1, 2); // O
+		ticTacToe.play(2, 2); // X
+		ticTacToe.play(1, 3); // O
+		String actual = ticTacToe.play(3, 3); // O
+		Assert.assertEquals("X is the winner", actual);
+	}
+
+	/**
+	 * Test Requirement for Specification 3 : Check if the top diagonal lines are
+	 * completed in order to finish the game and announce a winner
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenPlayAndBottomTopDiagonalLineThenWinner() {
+		ticTacToe.play(1, 3); // X
+		ticTacToe.play(1, 1); // O
+		ticTacToe.play(2, 2); // X
+		ticTacToe.play(1, 2); // O
+		String actual = ticTacToe.play(3, 1); // O
+		Assert.assertEquals("X is the winner", actual);
 	}
 }
