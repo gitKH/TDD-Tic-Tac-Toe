@@ -18,6 +18,8 @@ public class TicTacToeSpec {
 	 * 
 	 * Specification 3 : A player wins by being the first to connect a line of
 	 * friendly pieces from one side or corner of the board to the other. next.
+	 * 
+	 * Specification 4 : The result is a draw when all the boxes are filled.
 	 */
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
@@ -188,5 +190,26 @@ public class TicTacToeSpec {
 		ticTacToe.play(1, 2); // O
 		String actual = ticTacToe.play(3, 1); // O
 		Assert.assertEquals("X is the winner", actual);
+	}
+
+	/**
+	 * Test Requirement for Specification 4 : Check if all boxes are
+	 * completed in order to finish the game and announce a draw
+	 *
+	 * @param None
+	 * @return Nothing
+	 */
+	@Test
+	public void whenAllBoxesAreFilledThenDraw() {
+		ticTacToe.play(1, 1);
+		ticTacToe.play(1, 2);
+		ticTacToe.play(1, 3);
+		ticTacToe.play(2, 1);
+		ticTacToe.play(2, 3);
+		ticTacToe.play(2, 2);
+		ticTacToe.play(3, 1);
+		ticTacToe.play(3, 3);
+		String actual = ticTacToe.play(3, 2);
+		Assert.assertEquals("The result is draw", actual);
 	}
 }
